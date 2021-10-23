@@ -8,13 +8,10 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
     Buffer.cpp \
-    Supervisordevice.cpp \
         mainwindow.cpp \
     port.cpp
 
 HEADERS  += mainwindow.h \
-    BattarySupervisorCMDFactory.h \
-    BattarySupervisorCMDProvider.h \
     Buffer.h \
     Command.h \
     CommandFactory.h \
@@ -26,7 +23,7 @@ HEADERS  += mainwindow.h \
     Params.h \
     PassportDevice.h \
     ServiceData.h \
-    Supervisordevice.h \
+    Status.h \
     port.h
 
 FORMS    += mainwindow.ui

@@ -1,4 +1,5 @@
     #include <Buffer.h>
+    #include <Command.h>
     #include <QThread>
 bool::SEDP::Buffer::CheckCRC()
 {
@@ -11,9 +12,10 @@ bool::SEDP::Buffer::CheckCRC()
     }
 }
 
-bool::SEDP::Buffer::WriteHeader(InternalMonitoring::Command cmd)
+bool::SEDP::Buffer::WriteHeader()
 {
-    _buffer.clear();
+    _buffer.clear();//для отладки начинать с 0
+    return true;
 }
 
 bool::SEDP::Buffer::framingPacket()
@@ -21,18 +23,15 @@ bool::SEDP::Buffer::framingPacket()
     if (_buffer.getPosition()>=_minPacketSize-_crcSize)
     {
        uint16_t Packet_Size=static_cast<uint16_t>(_buffer.getPosition()+_crcSize);
-       _buffer[Position_SIZE_L]=maxByte(Packet_Size);
-       _buffer[Position_SIZE_H]=minByte(Packet_Size);
-       _buffer[Position_ADDR]=_addres;
+       //_buffer[Position::SIZE_L]=maxByte(Packet_Size);
+      // _buffer[Position::SIZE_H]=minByte(Packet_Size);
+      // _buffer[Position::ADDR]=_addres;
     }
+    return true;
 }
 
 void::SEDP::Buffer::sendPacket()
 {//отправка пакета!!!
-  //  connect(thread,SIGNAL(started()) worker, SLOT(process()));
-    COM_First.children();
-    COM_Second.parent();
-    COM_First.ConnectPort();
-    COM_Second.ConnectPort();
-    COM_First.blockSignals(true);
+    //connect(COM_First,SIGNAL(started()), this, SLOT(process()));
+
 }

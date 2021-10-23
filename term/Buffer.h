@@ -10,17 +10,17 @@
 #define TIMEOUT 300;
 typedef uint8_t BUFF[9];
 namespace SEDP{
-enum Position
+enum class Position: uint8_t
 {
-    Position_FEED1       = 0x00,
-    Position_FEED2       = 0x01,
-    Position_ADDR        = 0x02,
-    Position_TYPE        = 0x03,
-    Position_SIZE_L      = 0x04,
-    Position_SIZE_H      = 0x05,
-    Position_CMD         = 0x06,
-    Position_RESERVED    = 0x07,
-    Position_BODY        = 0x08
+    FEED1       = 0x00,
+    FEED2       = 0x01,
+    ADDR        = 0x02,
+    TYPE        = 0x03,
+    SIZE_L      = 0x04,
+    SIZE_H      = 0x05,
+    CMD         = 0x06,
+    RESERVED    = 0x07,
+    BODY        = 0x08
 };
 
 #define CRC_SIZE 2;
@@ -30,7 +30,7 @@ class Buffer
 {
 private:
     static bool CheckCRC();
-    static bool WriteHeader(InternalMonitoring::Command cmd);
+    static bool WriteHeader();
     static uint8_t getPosition()
 {
     return _addres;

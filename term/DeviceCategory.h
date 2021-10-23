@@ -1,6 +1,8 @@
+#pragma once
 #include <cstdint>
 #include <mainwindow.h>
 #include <QMainWindow>
+
 
 namespace CommonTypes
 {

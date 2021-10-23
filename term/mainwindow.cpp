@@ -57,6 +57,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->BtnDisconect, SIGNAL(clicked()),PortNew,SLOT(DisconnectPort()));
     connect(PortNew, SIGNAL(outPort(QString)), this, SLOT(Print(QString)));
     connect(this,SIGNAL(writeData(QByteArray)),PortNew,SLOT(WriteOut(QByteArray)));
+    connect(this,SIGNAL(writeData(Buffer)),PortNew,SLOT(WriteOut(QByteArray)));
     thread_New->start();
     ui->gridLayoutWidget->setVisible(false);
 }

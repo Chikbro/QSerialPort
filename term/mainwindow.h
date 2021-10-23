@@ -5,6 +5,7 @@
 #include <QtSerialPort/QSerialPort>
 #include <QtSerialPort/QSerialPortInfo>
 #include "port.h"
+#include <Buffer.h>
 
 namespace Ui
 {

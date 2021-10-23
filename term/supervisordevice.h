@@ -3,10 +3,11 @@
 #include<DeviceCategory.h>
 #include <BattarySupervisorCMDProvider.h>
 #include <BattarySupervisorCMDFactory.h>
-#include <SuperVisorData.h>
 #include <SabParams.h>
 namespace InternalMonitoring {
 namespace BatterySupervisor {
+namespace MonitoredData {
+
 
 class SupervisorDevice:public CommandProvider
 {
@@ -31,5 +32,6 @@ private:
     void onDisconnect(uint8_t address);
 };
 
+}
 }
 }
