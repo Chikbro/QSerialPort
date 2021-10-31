@@ -1,14 +1,15 @@
-QT       += core gui
+QT      += core gui
 QT      += serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
-TARGET = my_shag
+
+TARGET = my_app
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
     Buffer.cpp \
-        mainwindow.cpp \
+    mainwindow.cpp \
     port.cpp
 
 HEADERS  += mainwindow.h \

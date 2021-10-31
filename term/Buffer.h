@@ -7,7 +7,11 @@
 #include <Command.h>
 #include <port.h>
 #include <QThread>
+
 #define TIMEOUT 300;
+#define CRC_SIZE 2;
+#define PACKET_SIZE 10;
+
 typedef uint8_t BUFF[9];
 namespace SEDP{
 enum class Position: uint8_t
@@ -22,9 +26,6 @@ enum class Position: uint8_t
     RESERVED    = 0x07,
     BODY        = 0x08
 };
-
-#define CRC_SIZE 2;
-#define Packet_size 10;
 
 class Buffer
 {
@@ -47,11 +48,14 @@ private:
     static const uint8_t _feed1;
     static const uint8_t _feed2;
     static const uint8_t _crcSize =  CRC_SIZE;
-    static const uint8_t _minPacketSize = Packet_size;
+    static const uint8_t _minPacketSize = PACKET_SIZE;
     static size_t _packetSize;
     static Buffer _buffer;
     static Port COM_First;
     static Port COM_Second;
+    static size_t Packet_Size;
+    static const uint8_t minByte= _minPacketSize;
+    static const uint8_t maxByte;
 };
 }
 #endif
