@@ -28,7 +28,6 @@ private slots:
     void on_cEnterText_returnPressed();
     void on_BtnSave_clicked();
     void on_BtnOption_clicked();
-    void init();
 private:
     Ui::MainWindow *ui;
     Port PortNew;//

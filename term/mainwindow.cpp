@@ -4,8 +4,6 @@
 #include <QThread>
 #include <QDebug>
 #include <iostream>
-#include <PassportDevice.h>
-#include <Version.h>
 #include <Manufacturer.h>
 #include <DeviceCategory.h>
 
@@ -57,7 +55,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->BtnDisconect, SIGNAL(clicked()),PortNew,SLOT(DisconnectPort()));
     connect(PortNew, SIGNAL(outPort(QString)), this, SLOT(Print(QString)));
     connect(this,SIGNAL(writeData(QByteArray)),PortNew,SLOT(WriteOut(QByteArray)));
-    connect(this,SIGNAL(writeData(Buffer)),PortNew,SLOT(WriteOut(QByteArray)));
+    //connect(this,SIGNAL(writeData(Buffer)),PortNew,SLOT(WriteOut(QByteArray)));
     thread_New->start();
     ui->gridLayoutWidget->setVisible(false);
 }
@@ -109,9 +107,4 @@ void MainWindow::on_BtnOption_clicked()
 {
     ui->BtnOption->setVisible(false);
     ui->gridLayoutWidget->setVisible(true);
-    init(   );
-}
-void MainWindow::init()
-{
-    ui->BaudRateBox->setVisible(false);
 }
