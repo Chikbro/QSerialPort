@@ -1,8 +1,6 @@
 #include <stdint.h>
 #include <Buffer.h>
 #include <DeviceID.h>
-#include <Response.h>
-#include <Array_mapping.h>
 namespace InternalMonitoring {
 
 //const uint8_t BROADCAST_ADDRESS = 0xFF;

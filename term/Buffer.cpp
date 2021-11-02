@@ -24,9 +24,9 @@ bool::SEDP::Buffer::framingPacket()
     if (_buffer.getPosition()>=_minPacketSize-_crcSize)
     {
         uint16_t Packet_Size=static_cast<uint16_t>(_buffer.getPosition()+_crcSize);
-        _buffer[SEDP::Position::SIZE_L]=SEDP::Buffer::maxByte(Packet_Size);
-        _buffer[SEDP::Position::SIZE_H]=SEDP::Buffer::minByte(Packet_Size);
-        _buffer[SEDP::Position::ADDR]=_addres;
+       // _buffer[SEDP::Position::SIZE_L]=SEDP::Buffer::maxByte(Packet_Size);
+       // _buffer[SEDP::Position::SIZE_H]=SEDP::Buffer::minByte(Packet_Size);
+        //_buffer[SEDP::Position::ADDR]=_addres;
     }
     return true;
 }
