@@ -43,6 +43,9 @@ MainWindow::MainWindow(QWidget *parent) :
     //------------------------------------------------------------------------------
     QThread *thread_New = new QThread;
     Port *PortNew = new Port();
+
+   // Protocol buf {_port};
+
     thread_New->parent();
     QThread *thread_2=new QThread;
     Port *Port2=new Port();
@@ -51,12 +54,12 @@ MainWindow::MainWindow(QWidget *parent) :
     Port2->moveToThread(thread_2);
     PortNew->thisPort.moveToThread(thread_New);
     connect(PortNew, SIGNAL(error(QString)), this, SLOT(Print(QString)));
-   connect(Port2, SIGNAL(error(QString)), thread_2, SLOT(Print(QString)));
+    connect(Port2, SIGNAL(error(QString)), thread_2, SLOT(Print(QString)));
     connect(thread_New, SIGNAL(started()), PortNew, SLOT(process_Port()));
     connect(thread_2, SIGNAL(started()), Port2, SLOT(process_Port()));
-    //connect(PortNew, SIGNAL(finished_Port()), thread_New, SLOT(quit()));
+   //connect(PortNew, SIGNAL(finished_Port()), thread_New, SLOT(quit()));
    //connect(thread_New, SIGNAL(finished()), PortNew, SLOT(deleteLater()));
-    //connect(PortNew, SIGNAL(finished_Port()), thread_New, SLOT(deleteLater()));
+   //connect(PortNew, SIGNAL(finished_Port()), thread_New, SLOT(deleteLater()));
     connect(this,SIGNAL(savesettings(QString,int,int,int,int,int)),PortNew,SLOT(Write_Settings_Port(QString,int,int,int,int,int)));
     connect(this,SIGNAL(savesettings(QString,int,int,int,int,int)),Port2,SLOT(Write_Settings_Port(QString,int,int,int,int,int)));
     connect(ui->BtnConnect, SIGNAL(clicked()),PortNew,SLOT(ConnectPort()));
@@ -65,9 +68,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->BtnDisconect, SIGNAL(clicked()),Port2,SLOT(DisconnectPort()));
     connect(PortNew, SIGNAL(outPort(QString)), this, SLOT(Print(QString)));
     connect(Port2, SIGNAL(outPort(QString)), this, SLOT(Print(QString)));
-    connect(this,SIGNAL(writeData(QByteArray)),PortNew,SLOT(WriteOut(QByteArray)));
-    //connect(this,SIGNAL(writeData("0x01")),Port2,SLOT(WriteOut(QByteArray)));
-    //connect(this,SIGNAL(writeData(Buffer)),Port2,SLOT(WriteOut(QByteArray)));
+    //connect(this,SIGNAL(writeData(QByteArray)),PortNew,SLOT(WriteOut(QByteArray)));
+    //connect(this,SIGNAL(writeData(QByteArray)),PortNew,SLOT(ReadnPort()));
+    connect(this,SIGNAL(writeData(QByteArray)),PortNew,SLOT(buffer::write(QByteArray)));
+
     thread_New->start();
     thread_2->start();
     //--------------------------------------------------------------------------------
@@ -101,8 +105,9 @@ void MainWindow::checkCustomBaudRatePolicy(int idx)
 void MainWindow::on_cEnterText_returnPressed()
 {
     QByteArray data;
-    data = ui->cEnterText->text().toLocal8Bit()+ '\r';
+    data = ui->cEnterText->text().toLocal8Bit().toHex()+ '\r';
     writeData(data);
+    Print(data);
 }
 
 void MainWindow::Print(QString data)

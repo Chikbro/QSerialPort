@@ -6,7 +6,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 TARGET = my_app
 TEMPLATE = app
 
-
 SOURCES += main.cpp\
     Buffer.cpp \
     mainwindow.cpp \

@@ -23,7 +23,7 @@ public:
     QSerialPort thisPort;
     Settings SettingsPort;
 signals:
-    void finished_Port(); //
+    void finished_Port();
     void error(QString err);
     void outPort(QString data);
 public slots:
@@ -31,11 +31,13 @@ public slots:
     void ConnectPort(void);
     void Write_Settings_Port(QString name, int baudrate, int DataBits, int Parity, int StopBits, int FlowControl);
     void process_Port();
-    bool WriteToPort(QByteArray data);
-    void WriteOut(QByteArray request);
+   // bool WriteToPort(QByteArray data);
+   // void WriteOut(QByteArray request);
     bool Veryfi_CRC(const QByteArray &data);
     QByteArray inttohex(quint8 data);
-    QByteArray ReadInPort();
+    //QByteArray ReadInPort();
+
+
 private slots:
     void handleError(QSerialPort::SerialPortError error);//
 public:

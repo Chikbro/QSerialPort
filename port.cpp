@@ -21,8 +21,8 @@ void Port :: Write_Settings_Port(QString name, int baudrate,int DataBits,
                                  int Parity,int StopBits, int FlowControl)
 {
     SettingsPort.name =name;
-    SettingsPort.baudRate = (QSerialPort::BaudRate) baudrate;
-    //SettingsPort.baudRate = 19200;
+    //SettingsPort.baudRate = (QSerialPort::BaudRate) baudrate;
+    SettingsPort.baudRate = 19200;
     SettingsPort.dataBits = (QSerialPort::DataBits) DataBits;
     SettingsPort.parity = (QSerialPort::Parity) Parity;
     SettingsPort.stopBits = (QSerialPort::StopBits) StopBits;
@@ -76,49 +76,51 @@ void Port::DisconnectPort()
     }
 }
 
-bool Port :: WriteToPort(QByteArray data)
-{
-    if(thisPort.isOpen())
-    {
-        thisPort.write(data);
-        return thisPort.waitForBytesWritten(/*TIMEOUT*/ 10);
-    }
-    else return false;
-}
+//bool Port :: WriteToPort(QByteArray data)
+//{
+//    if(thisPort.isOpen())
+//    {
+//        thisPort.write(data);
+//        return thisPort.waitForBytesWritten(/*TIMEOUT*/ 10);
+//    }
+//    else return false;
+//}
 
-QByteArray Port :: ReadInPort()
-{
-    QByteArray data;
-    while (thisPort.waitForReadyRead(/*TIMEOUT*/ 10))
-    {
-        data +=thisPort.readAll();
-        int read_num = data.indexOf('\n');
-        if (read_num > 0)
-        {
-            data = data.left(read_num + 1);
-            if (Veryfi_CRC(data))
-            {
-                return data;
-            }
-            else
-            {
-                data.clear();
-                return data;
-            }
-        }
-    }
-    data.clear();
-    return data;
-}
+//QByteArray Port :: ReadInPort()
+//{
+//    QByteArray data;
+//    while (thisPort.waitForReadyRead(/*TIMEOUT*/ 10))
+//    {
+//        data +=thisPort.readAll();
+//        int read_num = data.indexOf('\n');
+//        if (read_num > 0)
+//        {
+//            data = data.left(read_num + 1);
+//            if (Veryfi_CRC(data))
+//            {
+//                return data;
+//            }
+//            else
+//            {
+//                data.clear();
+//                return data;
+//            }
+//        }
+//    }
+//    data.clear();
+//    return data;
+//}
 
-void Port::WriteOut(QByteArray request)
-{
-    bool OK_write = WriteToPort(request);
-    QByteArray read_data = ReadInPort( );
-    if (!(read_data.isNull()) || OK_write)
-       outPort("Запись прошла!: " + (QString)read_data);
-    else outPort("Запись не прошла!");
-}
+
+
+//void Port::WriteOut(QByteArray request)
+//{
+//    bool OK_write = WriteToPort(request);
+//    QByteArray read_data = ReadInPort( );
+//    if (!(read_data.isNull()) || OK_write)
+//       outPort("Запись прошла!: " + (QString)read_data);
+//    else outPort("Запись не прошла!");
+//}
 
 bool Port :: Veryfi_CRC(const QByteArray &data)
 {

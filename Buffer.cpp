@@ -1,8 +1,12 @@
 #include <Buffer.h>
 #include <Command.h>
 #include <QThread>
+#include<QtSerialPort>
+#include <QIODevice>
+#include <port.h>
 
-bool::SEDP::Buffer::CheckCRC()
+
+bool Protocol::CheckCRC()
 {
     if (_crcSize>0)
     {
@@ -13,30 +17,49 @@ bool::SEDP::Buffer::CheckCRC()
     }
 }
 
-bool::SEDP::Buffer::WriteHeader()
+bool Protocol::WriteHeader(uint8_t _buffer)
 {
-    _buffer.clear();//обнуление буффера
+    _buffer=0;//обнуление буффера
     return true;
 }
 
-bool::SEDP::Buffer::framingPacket()
+bool Protocol::framingPacket(uint8_t _buffer)
 {
-    if (_buffer.getPosition()>=Packet_Size-_crcSize)
+   // if (_buffer.getPosition()>=Packet_Size-_crcSize)
     {
-      uint16_t Packet_Size=static_cast<uint16_t>(_buffer.getPosition()+_crcSize);
-    //    _buffer[SEDP::Position::SIZE_L]=SEDP::Buffer::maxByte(Packet_Size);
-    //    _buffer[SEDP::Position::SIZE_H]=SEDP::Buffer::minByte(Packet_Size);
-    //    _buffer[SEDP::Position::ADDR]=_addres;
+//      uint16_t Packet_Size=static_cast<uint16_t>(_buffer.getPosition()+_crcSize);
+//      Protocol::_buffer[Position::SIZE_L]=maxByte(Packet_Size);
+//      _buffer[Position::SIZE_H]=minByte(Packet_Size);
+//      _buffer[Position::ADDR]=_addres;
     }
     return true;
 }
 
-bool::SEDP::Buffer::sendPacket()
-{//отправка пакета!!!
-    if(thisPort.isOpen())
+bool Protocol::write_to_port(QByteArray buf)
+{
+    if (_port.thisPort.isOpen())
     {
-        thisPort.write("0x01");
-        return thisPort.waitForBytesWritten(/*TIMEOUT*/ 10);
+        _port.thisPort.write(buf);
+        return _port.thisPort.waitForBytesWritten(300);
     }
-    else return false;
+        else return false;
+}
+
+QByteArray Protocol::read()
+{
+    while (_port.thisPort.waitForReadyRead(300))
+    {
+        buf=_port.thisPort.readAll();
+    }
+    _port.outPort(buf);
+    return buf;
+}
+
+void Protocol::write(QByteArray _request)
+{
+    bool Ok=write_to_port(_request);
+    QByteArray read_data=read();
+    if (!(read_data.isNull())||Ok)
+        _port.outPort("Сообщение прошло:"+(QString)read_data);
+    else _port.outPort("Не прошла отрпавка");
 }
